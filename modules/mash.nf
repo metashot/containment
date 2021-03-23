@@ -45,11 +45,11 @@ process mash_screen {
     publishDir "${params.outdir}/mash_screen" , mode: 'copy'
     
     input:
+    path (db_msh)
     tuple val(id), path(reads)
 
     output:
-    path (db_msh)
-    path (reads)
+    path "${id}.tsv", emit: screens
 
     script:
     param_winner_takes_all = params.winner_takes_all ? "-w" : ''
@@ -61,6 +61,6 @@ process mash_screen {
         -p ${task.cpus} \
         ${db_msh} \
         ${reads} \
-        > ${id}.screen.tsv
+        > ${id}.tsv
     """
 }
