@@ -24,6 +24,7 @@ for fn in glob.glob(os.path.join(SCREEN_DIR, "*")):
     screen_bn = os.path.basename(fn)
     screen_id = os.path.splitext(screen_bn)[0]
     screen_df = pd.read_table(fn, sep='\t', names=screen_header)
+    screen_df["Query comment"].fillna("", inplace=True)
     mult_series = screen_df \
         .set_index(["Query ID", "Query comment"])["Median multiplicity"]
     mult_series.name = screen_id
